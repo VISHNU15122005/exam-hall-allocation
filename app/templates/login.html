@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Login - Exam Hall Allocation{% endblock %}
+{% block guest_content %}
+<div class="login-wrap">
+  <div class="login-card">
+    <div class="login-brand"><i class="bi bi-mortarboard-fill"></i> Exam Hall &amp; Seat Allocation</div>
+    <p class="text-muted mb-4">Administrator sign in</p>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <form method="post">
+      <div class="mb-3">
+        <label class="form-label">Username</label>
+        <input type="text" name="username" class="form-control" required autofocus>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input type="password" name="password" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Sign In</button>
+    </form>
+    <p class="text-muted mt-3 small">Demo admin: <code>admin</code> / <code>admin123</code></p>
+  </div>
+</div>
+{% endblock %}

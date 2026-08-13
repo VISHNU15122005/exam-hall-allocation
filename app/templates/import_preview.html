@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Import Preview{% endblock %}
+{% block content %}
+<h3 class="mb-1">Import Preview</h3>
+<p class="text-muted">File: <strong>{{ filename }}</strong></p>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-3"><div class="metric-card"><div class="metric-value">{{ total }}</div><div class="metric-label">Total Records</div></div></div>
+  <div class="col-md-3"><div class="metric-card"><div class="metric-value text-success">{{ valid_count }}</div><div class="metric-label">Valid</div></div></div>
+  <div class="col-md-3"><div class="metric-card"><div class="metric-value text-danger">{{ invalid_count }}</div><div class="metric-label">Errors</div></div></div>
+  <div class="col-md-3 d-flex align-items-center">
+    <form method="post" action="{{ url_for('imports.confirm') }}" class="w-100">
+      <button type="submit" class="btn btn-success w-100" {{ 'disabled' if valid_count == 0 }}>
+        <i class="bi bi-check2-circle"></i> Confirm &amp; Save {{ valid_count }} Record(s)
+      </button>
+    </form>
+  </div>
+</div>
+
+<div class="card-surface">
+  <input type="text" id="rowFilter" class="form-control mb-3" placeholder="Filter rows by register number, name or status...">
+  <div style="max-height:520px; overflow:auto;">
+  <table class="table table-sm table-hover align-middle" id="previewTable">
+    <thead class="table-light" style="position:sticky; top:0;">
+      <tr><th>#</th><th>Register No</th><th>Name</th><th>Subject</th><th>Date</th><th>Time</th><th>Status</th><th>Details</th></tr>
+    </thead>
+    <tbody>
+    {% for r in results %}
+      <tr data-status="{{ r.status }}">
+        <td>{{ r.row_number }}</td>
+        <td>{{ r.raw.get('register_number', '') }}</td>
+        <td>{{ r.raw.get('student_name', '') }}</td>
+        <td>{{ r.raw.get('subject', '') }}</td>
+        <td>{{ r.raw.get('exam_date', '') }}</td>
+        <td>{{ r.raw.get('exam_time', '') }}</td>
+        <td>
+          {% if r.status == 'valid' %}<span class="badge text-bg-success">Valid</span>
+          {% else %}<span class="badge text-bg-danger">Invalid</span>{% endif %}
+        </td>
+        <td class="small text-muted">{{ r.errors | join(', ') }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<script>
+document.getElementById('rowFilter').addEventListener('input', function () {
+  const q = this.value.toLowerCase();
+  document.querySelectorAll('#previewTable tbody tr').forEach(function (row) {
+    row.style.display = row.innerText.toLowerCase().includes(q) ? '' : 'none';
+  });
+});
+</script>
+{% endblock %}

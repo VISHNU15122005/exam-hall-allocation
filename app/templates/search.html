@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Student Search{% endblock %}
+{% block content %}
+<h3 class="mb-4">Student Search</h3>
+
+<div class="card-surface mb-4">
+  <form method="get" class="d-flex gap-2">
+    <input class="form-control" type="text" name="q" value="{{ query }}" placeholder="Search by register number or name...">
+    <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Search</button>
+  </form>
+</div>
+
+{% if query %}
+  {% if results %}
+  <div class="row g-3">
+    {% for r in results %}
+    <div class="col-md-6">
+      <div class="card-surface">
+        <p class="mb-1"><strong>Register No:</strong> {{ r.student.register_number }}</p>
+        <p class="mb-1"><strong>Name:</strong> {{ r.student.student_name }}</p>
+        <p class="mb-1"><strong>Subject:</strong> {{ r.student.subject }}</p>
+        <p class="mb-1"><strong>Date:</strong> {{ r.student.exam_date.strftime('%d-%b-%Y') }}</p>
+        <p class="mb-1"><strong>Time:</strong> {{ r.student.exam_time.strftime('%I:%M %p') }}</p>
+        {% if r.allocation %}
+          <p class="mb-1"><strong>Hall:</strong> {{ r.allocation.hall.name }}</p>
+          <p class="mb-0"><strong>Seat:</strong> {{ r.allocation.seat_label }}</p>
+        {% else %}
+          <span class="badge text-bg-secondary">Not yet allocated</span>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="card-surface text-center text-muted py-5">No students found for "{{ query }}".</div>
+  {% endif %}
+{% endif %}
+{% endblock %}

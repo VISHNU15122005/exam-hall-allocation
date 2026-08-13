@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Exam Sessions{% endblock %}
+{% block content %}
+<h3 class="mb-4">Examination Sessions</h3>
+
+{% if not sessions %}
+<div class="card-surface text-center text-muted py-5">
+  <i class="bi bi-calendar-x fs-1"></i>
+  <p class="mt-2 mb-0">No exam sessions yet. Upload a student list first.</p>
+</div>
+{% else %}
+<div class="row g-3">
+  {% for s in sessions %}
+  <div class="col-md-4">
+    <div class="card-surface h-100">
+      <h6>{{ s.subject }}</h6>
+      <p class="text-muted mb-1"><i class="bi bi-calendar3"></i> {{ s.exam_date.strftime('%d-%b-%Y') }}</p>
+      <p class="text-muted mb-1"><i class="bi bi-clock"></i> {{ s.exam_time.strftime('%I:%M %p') }}</p>
+      <p class="mb-2"><i class="bi bi-people"></i> {{ s.student_count }} Students</p>
+      {% if s.is_allocated %}
+        <span class="badge text-bg-success mb-2">Allocated</span>
+      {% else %}
+        <span class="badge text-bg-secondary mb-2">Not Allocated</span>
+      {% endif %}
+      <div class="d-grid gap-2 mt-2">
+        <form method="post" action="{{ url_for('allocation.generate', session_id=s.id) }}">
+          <button class="btn btn-primary btn-sm w-100" type="submit">
+            <i class="bi bi-diagram-3"></i> {{ 'Re-generate Allocation' if s.is_allocated else 'Generate Allocation' }}
+          </button>
+        </form>
+        {% if s.is_allocated %}
+        <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('seating.view_session', session_id=s.id) }}">
+          <i class="bi bi-grid-3x3"></i> View Seating Plan
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

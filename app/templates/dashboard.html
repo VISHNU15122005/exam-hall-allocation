@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Exam Hall Allocation{% endblock %}
+{% block content %}
+<h3 class="mb-4">Dashboard</h3>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-3"><div class="metric-card">
+    <div class="metric-value">{{ total_students }}</div>
+    <div class="metric-label">Total Students</div>
+  </div></div>
+  <div class="col-md-3"><div class="metric-card">
+    <div class="metric-value">{{ total_sessions }}</div>
+    <div class="metric-label">Exam Sessions</div>
+  </div></div>
+  <div class="col-md-3"><div class="metric-card">
+    <div class="metric-value">{{ active_halls }}</div>
+    <div class="metric-label">Available Halls</div>
+  </div></div>
+  <div class="col-md-3"><div class="metric-card">
+    <div class="metric-value">{{ allocated_students }}</div>
+    <div class="metric-label">Allocated Students</div>
+  </div></div>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-4">
+    <div class="card-surface h-100">
+      <h6 class="mb-3">Quick Actions</h6>
+      <div class="d-grid gap-2">
+        <a class="btn btn-outline-primary" href="{{ url_for('imports.upload_form') }}"><i class="bi bi-upload"></i> Upload Student List</a>
+        <a class="btn btn-outline-primary" href="{{ url_for('halls.list_halls') }}"><i class="bi bi-building"></i> Manage Halls</a>
+        <a class="btn btn-outline-primary" href="{{ url_for('exams.list_exams') }}"><i class="bi bi-calendar-event"></i> View Exams / Generate Allocation</a>
+        <a class="btn btn-outline-primary" href="{{ url_for('search.search') }}"><i class="bi bi-search"></i> Search Student</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <div class="card-surface h-100">
+      <h6 class="mb-3">Upcoming Exam Sessions</h6>
+      {% if sessions %}
+      <table class="table table-sm align-middle">
+        <thead><tr><th>Subject</th><th>Date</th><th>Time</th><th>Students</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+        {% for s in sessions %}
+          <tr>
+            <td>{{ s.subject }}</td>
+            <td>{{ s.exam_date.strftime('%d-%b-%Y') }}</td>
+            <td>{{ s.exam_time.strftime('%I:%M %p') }}</td>
+            <td>{{ s.student_count }}</td>
+            <td>
+              {% if s.is_allocated %}<span class="badge text-bg-success">Allocated</span>
+              {% else %}<span class="badge text-bg-secondary">Not Allocated</span>{% endif %}
+            </td>
+            <td><a href="{{ url_for('exams.list_exams') }}" class="btn btn-sm btn-link">Open</a></td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+        <p class="text-muted mb-0">No exam sessions yet. Upload a student list to get started.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<div class="card-surface">
+  <h6 class="mb-3">Recent Imports</h6>
+  {% if recent_imports %}
+  <table class="table table-sm">
+    <thead><tr><th>File</th><th>Uploaded</th><th>Total</th><th>Valid</th><th>Invalid</th></tr></thead>
+    <tbody>
+    {% for b in recent_imports %}
+      <tr>
+        <td>{{ b.filename }}</td>
+        <td>{{ b.uploaded_at.strftime('%d-%b-%Y %H:%M') }}</td>
+        <td>{{ b.total_rows }}</td>
+        <td class="text-success">{{ b.valid_rows }}</td>
+        <td class="text-danger">{{ b.invalid_rows }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p class="text-muted mb-0">No imports yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

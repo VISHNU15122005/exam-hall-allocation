@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Upload Student List{% endblock %}
+{% block content %}
+<h3 class="mb-4">Upload Student Exam Data</h3>
+
+<div class="card-surface" style="max-width:640px;">
+  <p class="text-muted">Supported formats: <strong>.xlsx</strong>, <strong>.csv</strong>, <strong>.pdf</strong></p>
+  <p class="text-muted small">Required columns: Register Number, Student Name, Subject, Exam Date, Exam Time.
+  An optional Class/Section column is also read (used by future seating rules).</p>
+  <form method="post" action="{{ url_for('imports.upload') }}" enctype="multipart/form-data">
+    <div class="mb-3">
+      <input class="form-control" type="file" name="file" accept=".xlsx,.csv,.pdf" required>
+    </div>
+    <button class="btn btn-primary" type="submit"><i class="bi bi-upload"></i> Upload &amp; Preview</button>
+    <a class="btn btn-link" href="/sample_data">Need sample files?</a>
+  </form>
+</div>
+
+<div class="card-surface mt-3" style="max-width:640px;">
+  <h6>What happens next</h6>
+  <ol class="mb-0 text-muted">
+    <li>File is parsed and columns are normalized</li>
+    <li>Every row is validated</li>
+    <li>You review a preview of valid / invalid rows</li>
+    <li>Only valid rows are saved after you confirm</li>
+  </ol>
+</div>
+{% endblock %}

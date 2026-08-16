@@ -212,41 +212,5 @@ gives the exact one-line bug to introduce, the command to run, and the
 expected failing test — do this yourself and capture the real output for
 your submission, then revert and confirm green again.
 
-## AI Change Loop
 
-Not yet performed — intentionally, per the assessment brief (the
-adjacency/class-section seating rule should be added by you, live, with an
-AI coding assistant, so the failure/fix evidence is genuine). Full prompt,
-suggested approach, and evidence checklist: `docs/ai-change-loop.md`.
 
-## Known Limitations
-
-- No in-browser row editor for fixing invalid import rows — re-upload a
-  corrected file instead
-- Adjacency/class-section seating rule not yet implemented (see AI Change
-  Loop above)
-- PDF import relies on pdfplumber's table extraction; scanned/image-only
-  PDFs are not supported (no OCR) — this is stated in the in-app error
-  message rather than silently failing
-- Single admin role only (no multi-role permissions)
-- `test_allocation_service.py` and the Playwright e2e test were not
-  executed in the environment this repo was built in (no network access);
-  run them yourself after installing dependencies
-
-## Project Structure
-
-See the Architecture section above and `docs/architecture.md`.
-
-## Demo Instructions
-
-Recommended 3-minute walkthrough: Login → Dashboard → Upload
-`sample_data/students.xlsx` → Preview (point out valid/invalid counts) →
-Confirm → Halls (add 2 halls of 20 seats each, matching the 40-student demo
-dataset) → Exam Sessions → Generate Allocation → Seating Plan (click a
-seat) → Student Search → Export → show automated tests running → explain
-the red run and AI change loop from `docs/`.
-
-## Submission
-
-GitHub Repository:
-`<YOUR_GITHUB_REPOSITORY_URL>`

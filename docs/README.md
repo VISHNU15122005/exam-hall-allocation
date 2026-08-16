@@ -1,6 +1,6 @@
 # Exam Hall Allocation System — Elaborate Tactive Documentation Package
 
-This package was generated using the Smart Hostel Laundry reference documents as a **format/style reference**, while all project content was grounded in the Exam Hall Allocation System QA/AI report.
+
 
 ## Main deliverables
 

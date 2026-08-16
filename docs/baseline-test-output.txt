@@ -24,7 +24,3 @@ Not stated for this specific run.
 Execution time:
 Not stated.
 
-Important:
-The source report does not preserve the exact baseline command verbatim.
-This file is therefore an evidence summary and should not be presented as
-the original terminal transcript.

@@ -1,0 +1,29 @@
+FINAL TEST RUN — EVIDENCE SUMMARY
+
+UNIT-ONLY:
+Command:
+    pytest tests/unit -v
+
+Result:
+    67 passed, 0 failed
+
+Environment:
+    Fresh Python virtual environment
+    Dependencies installed from requirements.txt
+
+BROADER:
+Command:
+    python -m pytest tests/ -v
+
+Result:
+    1 failed, 67 passed, 229 warnings in 10.99s
+
+Interpretation recorded by source:
+The single failure is attributed to the Playwright integration/E2E test being
+unable to run in the sandbox because a working Chromium/browser environment
+was unavailable and network access was restricted.
+
+Important:
+The exact traceback naming the failed integration test was not shown in the
+audit excerpt. Therefore this file does not claim independent confirmation
+of that root cause.

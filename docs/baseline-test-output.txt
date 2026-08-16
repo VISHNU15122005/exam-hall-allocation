@@ -1,0 +1,30 @@
+BASELINE GREEN RUN — EVIDENCE SUMMARY
+
+Project: Exam Hall Allocation System
+
+Purpose:
+Establish the pre-change regression baseline before implementing Class/Section
+adjacency avoidance.
+
+Recorded result:
+60 passed, 0 failed.
+
+Tests collected:
+60.
+
+Failed:
+0.
+
+Skipped:
+Not stated.
+
+Warnings:
+Not stated for this specific run.
+
+Execution time:
+Not stated.
+
+Important:
+The source report does not preserve the exact baseline command verbatim.
+This file is therefore an evidence summary and should not be presented as
+the original terminal transcript.

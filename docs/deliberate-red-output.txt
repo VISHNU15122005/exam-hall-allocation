@@ -1,0 +1,35 @@
+DELIBERATE RED RUN — EVIDENCE SUMMARY
+
+Protected business rule:
+Hall capacity must never be exceeded.
+
+Intentional source change:
+allocation_service.py
+capacity comparison:
+    >=
+was temporarily changed to:
+    >
+
+Observed failure:
+IndexError: list index out of range
+at allocation_service.py:115
+
+Pytest summary:
+1 failed, 12 warnings in 0.78s
+
+Root cause:
+The weakened guard allowed the allocator to attempt seating one more student
+than the hall capacity, causing an out-of-range seat access.
+
+Restoration:
+The incorrect condition was reverted.
+The source report states that byte-for-byte equality with the original source
+was verified using diff.
+
+Original raw evidence:
+docs/evidence/deliberate-red-output.txt
+114 lines, according to the source report.
+
+IMPORTANT:
+This generated file is a structured evidence summary, not a replacement for
+the original raw 114-line terminal output.

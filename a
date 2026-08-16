@@ -1,1 +1,867 @@
-aa
+# AI-Assisted Exam Hall & Seat Allocation System
+
+**Automated Student Data Import, Intelligent Seating Allocation & AI-Driven QA**
+
+Built for the **Tactive AI-Powered QA Automation, Documentation & Software Engineering Assessment**.
+
+---
+
+## 📌 Project Overview
+
+The **AI-Assisted Exam Hall & Seat Allocation System** is a Flask-based web application designed to automate and simplify examination seating management.
+
+The system allows an examination administrator to take raw student examination data from **Excel, CSV, or PDF files**, validate the records, group students into examination sessions, configure multiple examination halls, automatically allocate seats, view seating plans, search for individual students, and export the final seating information.
+
+The project also demonstrates an **AI-assisted software development and QA workflow**, where AI tools were used for implementation, testing, debugging, documentation, and analysis, while the final implementation was verified through actual application execution and automated testing.
+
+---
+
+# 🎯 Problem
+
+A college examination administrator needs to take a raw student examination list and convert it into a valid hall-and-seat allocation.
+
+When this process is performed manually, several problems can occur:
+
+- Duplicate student allocations
+- Double-booked seats
+- Hall capacity being exceeded
+- Invalid or incomplete student records
+- Incorrect examination dates or times
+- Duplicate register numbers
+- Difficulty managing multiple examination halls
+- Difficulty finding an individual student's seat
+- Difficulty handling large student datasets
+- Lack of clear records for students who could not be seated
+
+The system addresses these problems by providing an automated and centralized examination seating management workflow.
+
+---
+
+# 💡 Solution
+
+The project provides a single Flask web application with the following workflow:
+
+```text
+Student Data Upload
+        ↓
+Data Validation
+        ↓
+Preview
+        ↓
+Admin Confirmation
+        ↓
+Exam Session Grouping
+        ↓
+Hall Configuration
+        ↓
+Automatic Seat Allocation
+        ↓
+Visual Seating Plan
+        ↓
+Student Search
+        ↓
+Export
+```
+
+The system validates uploaded data before saving it, helping prevent invalid examination records from entering the database.
+
+---
+
+# ✨ Features
+
+## 📁 Student Data Import
+
+The application supports importing student examination data from:
+
+- Excel (`.xlsx`)
+- CSV (`.csv`)
+- PDF (`.pdf`)
+
+Common column variations are normalized automatically.
+
+Examples:
+
+```text
+Register Number
+Reg No
+Register No
+Student Name
+Name
+Exam Date
+Date
+Exam Time
+Time
+```
+
+---
+
+## ✅ Data Validation
+
+Uploaded student records are validated before they are saved.
+
+Validation includes:
+
+- Missing register number
+- Missing student name
+- Missing subject
+- Invalid examination date
+- Invalid examination time
+- Duplicate register numbers
+- Empty files
+- Unsupported file types
+- Corrupt files
+- Invalid records
+
+The administrator can preview validation results before confirming the import.
+
+---
+
+# 📅 Examination Session Management
+
+Students are automatically grouped into examination sessions using:
+
+```text
+Subject + Exam Date + Exam Time
+```
+
+Each session can be managed independently.
+
+---
+
+# 🏫 Examination Hall Management
+
+The system supports multiple examination halls.
+
+Each hall can be configured using:
+
+- Hall name
+- Number of rows
+- Number of columns
+- Seating capacity
+- Active / inactive status
+
+Capacity is calculated as:
+
+```text
+Capacity = Rows × Columns
+```
+
+Example:
+
+```text
+5 rows × 4 columns = 20 seats
+```
+
+Multiple halls can be used when one hall does not have sufficient capacity.
+
+---
+
+# 💺 Intelligent Seat Allocation
+
+The allocation engine automatically assigns students to available examination halls and seats.
+
+It prevents invalid allocations and reports students who cannot be allocated when capacity is insufficient.
+
+Example:
+
+```text
+Students: 40
+
+Hall 1: 20 seats
+Hall 2: 20 seats
+
+Total Capacity: 40
+
+Allocated: 40
+Unallocated: 0
+```
+
+---
+
+# 🖱️ Interactive Seating Plan
+
+The application provides a visual seating layout for examination halls.
+
+The seating grid allows the administrator to inspect individual seats and view associated student information.
+
+---
+
+# 🔍 Student Search
+
+Administrators can search for students using:
+
+- Register number
+- Student name
+
+The system displays relevant examination and seating information.
+
+---
+
+# 📤 Export
+
+The system supports exporting seating information into:
+
+- Excel
+- PDF
+
+---
+
+# 🔐 Administrator Authentication
+
+The application provides administrator authentication.
+
+Protected functionality is available only to authenticated administrators.
+
+Passwords are securely hashed using Werkzeug.
+
+---
+
+# 🏗️ System Architecture
+
+```text
+                         ADMINISTRATOR
+                               │
+                               ▼
+                       ┌───────────────┐
+                       │ Web Interface │
+                       └───────┬───────┘
+                               │
+                               ▼
+                       ┌───────────────┐
+                       │ Flask Backend │
+                       └───────┬───────┘
+                               │
+              ┌────────────────┼────────────────┐
+              │                │                │
+              ▼                ▼                ▼
+       Import Service    Validation       Allocation
+              │                │             Engine
+              └────────────────┼────────────────┘
+                               │
+                               ▼
+                         ┌───────────┐
+                         │ Database  │
+                         └───────────┘
+                               │
+             ┌─────────────────┼─────────────────┐
+             ▼                 ▼                 ▼
+          Students        Exam Sessions        Halls
+                               │
+                               ▼
+                         Seat Allocation
+                               │
+                               ▼
+                    Seating Plan / Export
+```
+
+Detailed architecture information:
+
+```text
+docs/architecture.md
+docs/architecture.pdf
+```
+
+---
+
+# 📂 Project Structure
+
+```text
+exam-hall-allocation/
+│
+├── app/
+│   ├── routes/
+│   ├── services/
+│   ├── validators/
+│   ├── models.py
+│   ├── templates/
+│   └── static/
+│
+├── tests/
+│   ├── unit/
+│   └── integration/
+│
+├── docs/
+│   ├── TEST_EVIDENCE_REPORT.md
+│   ├── TEST_EVIDENCE_REPORT.pdf
+│   ├── AI_CHANGE_LOOP.md
+│   ├── AI_CHANGE_LOOP.pdf
+│   ├── architecture.md
+│   ├── architecture.pdf
+│   ├── design.md
+│   ├── design.pdf
+│   ├── user-guide.md
+│   ├── user-guide.pdf
+│   └── logs/
+│       ├── baseline-test-output.txt
+│       ├── deliberate-red-output.txt
+│       ├── final-test-output.txt
+│       ├── test-summary.md
+│       ├── test-case-results.md
+│       ├── ai-prompts.md
+│       ├── ai-attempts.md
+│       └── evidence-index.md
+│
+├── sample_data/
+├── scripts/
+│   └── generate_sample_data.py
+├── config.py
+├── requirements.txt
+├── run.py
+├── .env.example
+├── .gitignore
+└── README.md
+```
+
+---
+
+# 🛠️ Technology Stack
+
+| Component | Technology |
+|---|---|
+| Programming Language | Python |
+| Backend Framework | Flask |
+| Database | SQLite |
+| ORM | SQLAlchemy / Flask-SQLAlchemy |
+| Frontend | HTML, CSS |
+| UI Framework | Bootstrap 5 |
+| Template Engine | Jinja |
+| Data Processing | Pandas |
+| Excel Processing | OpenPyXL |
+| PDF Processing | PDFPlumber |
+| PDF Export | ReportLab |
+| Authentication | Flask-Login |
+| Password Hashing | Werkzeug |
+| Unit Testing | Pytest |
+| E2E Testing | Playwright |
+| AI Assistance | Claude / ChatGPT |
+
+---
+
+# ⚙️ Installation
+
+## 1. Clone the Repository
+
+```bash
+git clone https://github.com/VISHNU15122005/exam-hall-allocation.git
+cd exam-hall-allocation
+```
+
+## 2. Create a Virtual Environment
+
+### Windows
+
+```cmd
+python -m venv venv
+venv\Scripts\activate
+```
+
+### Linux / macOS
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+## 3. Install Dependencies
+
+```cmd
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+If OpenPyXL is missing:
+
+```cmd
+pip install openpyxl
+```
+
+---
+
+# 🔧 Configuration
+
+Create the `.env` file.
+
+### Windows
+
+```cmd
+copy .env.example .env
+```
+
+### Linux / macOS
+
+```bash
+cp .env.example .env
+```
+
+Configure the required environment variables.
+
+Example:
+
+```text
+SECRET_KEY=your-secret-key
+```
+
+Do not commit the real `.env` file to GitHub.
+
+---
+
+# 🗄️ Database Setup
+
+The application initializes the database when the Flask application starts.
+
+The application also provides a Flask CLI command for creating administrator accounts:
+
+```cmd
+flask --app run.py create-admin <username> <password>
+```
+
+Example:
+
+```cmd
+flask --app run.py create-admin admin2 StrongPassword123
+```
+
+---
+
+# ▶️ Running the Application
+
+Activate the virtual environment:
+
+```cmd
+venv\Scripts\activate
+```
+
+Start the application:
+
+```cmd
+python run.py
+```
+
+Open:
+
+```text
+http://127.0.0.1:5000
+```
+
+---
+
+# 👤 Demo Login
+
+For the configured development/demo environment:
+
+```text
+Username: admin
+Password: admin123
+```
+
+For real deployment, use a strong password and change the default credentials.
+
+---
+
+
+
+# 📄 Input File Format
+
+Standard input columns:
+
+```text
+Register Number | Student Name | Subject | Exam Date | Exam Time
+```
+
+Example:
+
+```text
+Register Number | Student Name | Subject | Exam Date | Exam Time
+
+23CSE001 | Arun Kumar | Data Structures | 2026-08-20 | 09:00
+23CSE002 | Priya S | Data Structures | 2026-08-20 | 09:00
+23CSE003 | Rahul K | Operating Systems | 2026-08-21 | 14:00
+23CSE004 | Anitha R | Operating Systems | 2026-08-21 | 14:00
+```
+
+Common column aliases are normalized automatically.
+
+---
+
+
+
+# 📐 Allocation Business Rules
+
+1. Every allocated student receives exactly one seat.
+2. A single seat cannot be assigned to more than one student.
+3. Hall capacity cannot be exceeded.
+4. A student cannot be allocated twice for the same examination session.
+5. Duplicate register numbers are rejected during import.
+6. Only students in the selected session are allocated.
+7. Students who cannot be seated because of insufficient capacity are reported.
+8. A student cannot be double-booked at the exact same date and time across different sessions.
+
+Detailed mapping:
+
+```text
+docs/design.md
+docs/design.pdf
+```
+
+---
+
+# 🔄 Application Workflow
+
+```text
+ADMINISTRATOR
+      │
+      ▼
+    LOGIN
+      │
+      ▼
+  DASHBOARD
+      │
+      ├──────────────┬──────────────┐
+      ▼              ▼              ▼
+   STUDENTS        EXAMS          HALLS
+      │              │              │
+      ▼              ▼              ▼
+   VALIDATE       SESSIONS       CAPACITY
+      │              │              │
+      └──────────────┼──────────────┘
+                     ▼
+              SEAT ALLOCATION
+                     │
+              ┌──────┴──────┐
+              ▼             ▼
+       SEATING PLAN     SEARCH
+              │             │
+              └──────┬──────┘
+                     ▼
+                   EXPORT
+```
+
+---
+
+# 🧪 Testing
+
+Testing was performed as an important part of the assessment.
+
+The project includes automated tests using **Pytest** and an integration workflow using **Playwright**.
+
+Testing covered:
+
+- Student data validation
+- Input file validation
+- File parsing
+- Column normalization
+- Duplicate detection
+- Examination session handling
+- Hall configuration
+- Hall capacity
+- Seat allocation
+- Allocation business rules
+- Invalid input cases
+- Edge cases
+- Application workflow
+
+---
+
+# ✅ Final Test Results
+
+The final verified automated test execution completed with:
+
+```text
+28 PASSED
+1 SKIPPED
+11 WARNINGS
+```
+
+The final test run was performed after implementing and correcting the required functionality.
+
+The result was captured as assessment evidence.
+
+---
+
+# 🔴 Deliberate Red Test
+
+A deliberate failing test was performed as part of the assessment to demonstrate an actual failure-and-recovery workflow.
+
+```text
+Working Implementation
+        ↓
+Deliberate Change
+        ↓
+Test Failure
+        ↓
+Failure Investigation
+        ↓
+Correction
+        ↓
+Re-test
+        ↓
+Successful Final Result
+```
+
+Evidence:
+
+```text
+docs/logs/deliberate-red-output.txt
+docs/logs/final-test-output.txt
+```
+
+---
+
+# ▶️ Running Tests
+
+Activate the environment:
+
+```cmd
+venv\Scripts\activate
+```
+
+Run all tests:
+
+```cmd
+pytest -v
+```
+
+Run unit tests:
+
+```cmd
+pytest tests/unit -v
+```
+
+---
+
+# 🌐 Playwright End-to-End Testing
+
+Install Playwright:
+
+```cmd
+pip install playwright
+```
+
+Install browsers:
+
+```cmd
+playwright install
+```
+
+Start the application:
+
+```cmd
+python run.py
+```
+
+Run the integration test:
+
+```cmd
+pytest tests/integration/test_e2e_workflow.py
+```
+
+---
+
+# 🔄 AI-Assisted Development & QA
+
+The project used an AI-assisted development and testing workflow.
+
+```text
+User Requirement
+       ↓
+AI Prompt
+       ↓
+AI Analysis
+       ↓
+Suggested Code / Test Change
+       ↓
+Implementation
+       ↓
+Run Application / Tests
+       ↓
+Observe Result
+       ↓
+Failure / Feedback
+       ↓
+Investigation
+       ↓
+Correction
+       ↓
+Re-test
+       ↓
+Verified Result
+```
+
+AI suggestions were not treated as automatic proof of correctness. Important changes were verified through actual application execution and testing.
+
+---
+
+# 📚 AI Change Loop Evidence
+
+Detailed evidence is available in:
+
+```text
+docs/AI_CHANGE_LOOP.md
+docs/AI_CHANGE_LOOP.pdf
+```
+
+The documentation includes:
+
+- AI prompts
+- AI attempts
+- Code changes
+- Testing
+- Failures
+- Corrections
+- Final verification
+
+---
+
+# 📋 Test Evidence Documentation
+
+Complete test evidence is available in:
+
+```text
+docs/TEST_EVIDENCE_REPORT.md
+docs/TEST_EVIDENCE_REPORT.pdf
+```
+
+The report includes:
+
+- Testing objectives
+- Test strategy
+- Test cases
+- Test execution
+- Test results
+- Deliberate failure
+- Final verification
+- Evidence references
+
+---
+
+# 🧾 Test Logs
+
+The following evidence files are maintained under:
+
+```text
+docs/logs/
+```
+
+```text
+baseline-test-output.txt
+deliberate-red-output.txt
+final-test-output.txt
+test-summary.md
+test-case-results.md
+ai-prompts.md
+ai-attempts.md
+evidence-index.md
+```
+
+These files provide traceability between testing, changes, and final verification.
+
+---
+
+# 📖 Documentation
+
+The project includes:
+
+### Test Evidence Report
+
+```text
+docs/TEST_EVIDENCE_REPORT.md
+docs/TEST_EVIDENCE_REPORT.pdf
+```
+
+### AI Change Loop
+
+```text
+docs/AI_CHANGE_LOOP.md
+docs/AI_CHANGE_LOOP.pdf
+```
+
+### Architecture
+
+```text
+docs/architecture.md
+docs/architecture.pdf
+```
+
+### Design
+
+```text
+docs/design.md
+docs/design.pdf
+```
+
+### User Guide
+
+```text
+docs/user-guide.md
+docs/user-guide.pdf
+
+---
+
+# 📈 Demonstration Dataset
+
+Example demonstration configuration:
+
+```text
+Total Students       : 40
+Exam Sessions        : 2
+Halls                : 2
+Seats per Hall       : 20
+Total Capacity       : 40
+Allocated Students   : 40
+Unallocated Students : 0
+```
+
+Example sessions:
+
+```text
+Data Structures
+20-08-2026
+09:00 AM
+```
+
+```text
+Operating Systems
+21-08-2026
+02:00 PM
+```
+---
+
+# 🚀 Future Improvements
+
+Possible future enhancements include:
+
+- Role-based access control
+- Advanced seating constraints
+- Automatic invigilator allocation
+- Student attendance management
+- QR-code based student seat lookup
+- Email notifications
+- SMS notifications
+- Advanced reporting dashboards
+- Automatic PDF seating-plan generation
+- Additional allocation strategies
+- Cloud database support
+- Production deployment
+- Additional security hardening
+- Mobile-friendly administrator interface
+
+---
+
+# 👨‍💻 Author
+
+Vishnu B
+B.Tech Computer Science and Engineering**
+
+---
+
+# 🔗 GitHub Repository
+
+https://github.com/VISHNU15122005/exam-hall-allocation
+
+---
+
+# 📄 License
+
+This project was developed as an academic and software engineering assessment project.
+
+An appropriate open-source license can be added if the project is intended for public redistribution.

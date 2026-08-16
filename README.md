@@ -740,40 +740,6 @@ Re-test
 Verified Result
 ```
 
-AI suggestions were not treated as automatic proof of correctness. Important changes were verified through actual application execution and testing.
-
----
-
-# 🤖 AI Tools Used
-
-## Claude
-
-Claude was used for:
-
-- Application implementation
-- Route development
-- Service development
-- Validation logic
-- Test generation
-- Test analysis
-- Debugging assistance
-- Documentation
-- Test report generation
-- AI change-loop documentation
-
-## ChatGPT
-
-ChatGPT was used for:
-
-- Project planning
-- Development guidance
-- Debugging assistance
-- Testing guidance
-- Documentation preparation
-- Presentation preparation
-- Video presentation preparation
-
----
 
 # 📚 AI Change Loop Evidence
 
@@ -837,57 +803,6 @@ ai-attempts.md
 evidence-index.md
 ```
 
-These files provide traceability between testing, changes, and final verification.
-
----
-
-# 🔐 Security
-
-## Password Hashing
-
-Administrator passwords are hashed using Werkzeug.
-
-```python
-generate_password_hash()
-```
-
-Passwords are not stored as plain text.
-
-## Authentication
-
-Protected administrator routes use Flask-Login.
-
-```python
-@login_required
-```
-
-## File Upload Security
-
-Uploaded files are controlled through:
-
-- Allowed file extensions
-- File size restrictions
-- Secure filename handling
-- Input validation
-
-Supported formats:
-
-```text
-.xlsx
-.csv
-.pdf
-```
-
-## Environment Variables
-
-Sensitive configuration is stored using environment variables.
-
-```text
-.env.example
-```
-
-The real `.env` file should not be committed.
-
 ## Git Ignore
 
 Runtime and sensitive files are excluded using `.gitignore`:
@@ -943,99 +858,6 @@ docs/user-guide.pdf
 
 ---
 
-# 📊 Assessment Status
-
-| Assessment Component | Status |
-|---|---|
-| Application Implementation | ✅ Completed |
-| Student Data Import | ✅ Completed |
-| Excel Import | ✅ Completed |
-| CSV Import | ✅ Completed |
-| PDF Import | ✅ Completed |
-| Data Validation | ✅ Completed |
-| Preview Before Confirmation | ✅ Completed |
-| Exam Session Management | ✅ Completed |
-| Multiple Hall Management | ✅ Completed |
-| Rows × Columns Configuration | ✅ Completed |
-| Seat Allocation | ✅ Completed |
-| Allocation Business Rules | ✅ Completed |
-| Student Search | ✅ Completed |
-| Seating Plan | ✅ Completed |
-| Excel Export | ✅ Completed |
-| PDF Export | ✅ Completed |
-| Admin Authentication | ✅ Completed |
-| Automated Testing | ✅ Completed |
-| Deliberate Red Run | ✅ Completed |
-| AI Change Loop | ✅ Completed |
-| Test Evidence | ✅ Completed |
-| Architecture Documentation | ✅ Completed |
-| Design Documentation | ✅ Completed |
-| User Guide | ✅ Completed |
-| Assessment Presentation | ✅ Completed |
-| Demo Video | ✅ Completed |
-
----
-
-# 📈 Demonstration Dataset
-
-Example demonstration configuration:
-
-```text
-Total Students       : 40
-Exam Sessions        : 2
-Halls                : 2
-Seats per Hall       : 20
-Total Capacity       : 40
-Allocated Students   : 40
-Unallocated Students : 0
-```
-
-Example sessions:
-
-```text
-Data Structures
-20-08-2026
-09:00 AM
-```
-
-```text
-Operating Systems
-21-08-2026
-02:00 PM
-```
-
----
-
-# 🎥 Assessment Demonstration
-
-The recorded project demonstration covers:
-
-```text
-1. Administrator Login
-        ↓
-2. Dashboard
-        ↓
-3. Student Data Import
-        ↓
-4. Data Validation
-        ↓
-5. Exam Sessions
-        ↓
-6. Hall Management
-        ↓
-7. Seat Allocation
-        ↓
-8. Seating Plan
-        ↓
-9. Student Search
-        ↓
-10. Export
-        ↓
-11. Testing Evidence
-```
-
----
-
 # 🚀 Future Improvements
 
 Possible future enhancements include:
@@ -1054,28 +876,6 @@ Possible future enhancements include:
 - Production deployment
 - Additional security hardening
 - Mobile-friendly administrator interface
-
----
-
-# 🎓 Assessment Context
-
-This project was developed as part of the:
-
-**Tactive AI-Powered QA Automation, Documentation & Software Engineering Assessment**
-
-The project demonstrates:
-
-- Software development
-- Flask web application development
-- Data processing
-- Database management
-- Business rule implementation
-- Automated testing
-- Deliberate failure testing
-- AI-assisted development
-- AI-assisted QA
-- Technical documentation
-- Evidence-based verification
 
 ---
 
